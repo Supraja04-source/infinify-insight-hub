@@ -1,8 +1,55 @@
-import { Card } from "@/components/ui/card";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, Users } from "lucide-react";
+import { CustomerForm } from "@/components/forms/CustomerForm";
+import { CustomerTable } from "@/components/tables/CustomerTable";
+import { toast } from "@/hooks/use-toast";
+
+interface Customer {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  industry: string;
+  country: string;
+  location: string;
+  address: string;
+  gstin?: string;
+  pan?: string;
+  status: "active" | "inactive";
+  createdDate: string;
+}
 
 export default function Customers() {
+  const [showCustomerForm, setShowCustomerForm] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | undefined>();
+
+  const handleEdit = (customer: Customer) => {
+    setSelectedCustomer(customer);
+    setShowCustomerForm(true);
+  };
+
+  const handleView = (customer: Customer) => {
+    toast({
+      title: "Customer Details",
+      description: `Viewing details for ${customer.name}`,
+    });
+  };
+
+  const handleDelete = (customer: Customer) => {
+    toast({
+      title: "Customer Deleted",
+      description: `${customer.name} has been removed from the system.`,
+      variant: "destructive",
+    });
+  };
+
+  const handleAddNew = () => {
+    setSelectedCustomer(undefined);
+    setShowCustomerForm(true);
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
@@ -14,23 +61,23 @@ export default function Customers() {
             Manage customer information and relationships
           </p>
         </div>
-        <Button className="btn-glow">
+        <Button className="btn-glow" onClick={handleAddNew}>
           <Plus className="h-4 w-4 mr-2" />
           Add Customer
         </Button>
       </div>
 
-      <Card className="glass-card p-6">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-warning to-primary flex items-center justify-center">
-            <Users className="h-5 w-5 text-white" />
-          </div>
-          <h3 className="text-lg font-semibold">Customer Database</h3>
-        </div>
-        <div className="h-64 flex items-center justify-center text-muted-foreground">
-          Customer management interface coming soon...
-        </div>
-      </Card>
+      <CustomerTable 
+        onEdit={handleEdit}
+        onView={handleView}
+        onDelete={handleDelete}
+      />
+
+      <CustomerForm
+        open={showCustomerForm}
+        onOpenChange={setShowCustomerForm}
+        customer={selectedCustomer}
+      />
     </div>
   );
 }
