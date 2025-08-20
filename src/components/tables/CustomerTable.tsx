@@ -91,8 +91,8 @@ const mockCustomers: Customer[] = [
 export function CustomerTable({ onEdit, onView, onDelete }: CustomerTableProps) {
   const [customers, setCustomers] = useState<Customer[]>(mockCustomers);
   const [searchTerm, setSearchTerm] = useState("");
-  const [industryFilter, setIndustryFilter] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
+  const [industryFilter, setIndustryFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   const filteredCustomers = customers.filter((customer) => {
     const matchesSearch = 
