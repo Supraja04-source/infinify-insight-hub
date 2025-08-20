@@ -100,8 +100,8 @@ export function CustomerTable({ onEdit, onView, onDelete }: CustomerTableProps) 
       customer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       customer.company.toLowerCase().includes(searchTerm.toLowerCase());
     
-    const matchesIndustry = !industryFilter || customer.industry === industryFilter;
-    const matchesStatus = !statusFilter || customer.status === statusFilter;
+    const matchesIndustry = !industryFilter || industryFilter === "all" || customer.industry === industryFilter;
+    const matchesStatus = !statusFilter || statusFilter === "all" || customer.status === statusFilter;
 
     return matchesSearch && matchesIndustry && matchesStatus;
   });
@@ -140,7 +140,7 @@ export function CustomerTable({ onEdit, onView, onDelete }: CustomerTableProps) 
                 <SelectValue placeholder="Industry" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Industries</SelectItem>
+                <SelectItem value="all">All Industries</SelectItem>
                 <SelectItem value="Technology">Technology</SelectItem>
                 <SelectItem value="Software">Software</SelectItem>
                 <SelectItem value="Finance">Finance</SelectItem>
@@ -153,7 +153,7 @@ export function CustomerTable({ onEdit, onView, onDelete }: CustomerTableProps) 
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Status</SelectItem>
+                <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="active">Active</SelectItem>
                 <SelectItem value="inactive">Inactive</SelectItem>
               </SelectContent>
