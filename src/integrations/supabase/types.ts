@@ -14,13 +14,209 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      customers: {
+        Row: {
+          address: string | null
+          company: string | null
+          country: string | null
+          created_at: string
+          email: string | null
+          gstin: string | null
+          id: string
+          industry: string | null
+          location: string | null
+          name: string
+          pan: string | null
+          phone: string | null
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          company?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          gstin?: string | null
+          id?: string
+          industry?: string | null
+          location?: string | null
+          name: string
+          pan?: string | null
+          phone?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          company?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          gstin?: string | null
+          id?: string
+          industry?: string | null
+          location?: string | null
+          name?: string
+          pan?: string | null
+          phone?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          gst_percentage: number
+          id: string
+          name: string
+          status: string | null
+          unit_price: number
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          gst_percentage?: number
+          id?: string
+          name: string
+          status?: string | null
+          unit_price?: number
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          gst_percentage?: number
+          id?: string
+          name?: string
+          status?: string | null
+          unit_price?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      quotation_items: {
+        Row: {
+          created_at: string
+          gst_percentage: number
+          id: string
+          item_name: string
+          line_total: number
+          product_id: string | null
+          quantity: number
+          quotation_id: string
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          gst_percentage?: number
+          id?: string
+          item_name: string
+          line_total?: number
+          product_id?: string | null
+          quantity: number
+          quotation_id: string
+          unit_price: number
+        }
+        Update: {
+          created_at?: string
+          gst_percentage?: number
+          id?: string
+          item_name?: string
+          line_total?: number
+          product_id?: string | null
+          quantity?: number
+          quotation_id?: string
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quotation_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quotation_items_quotation_id_fkey"
+            columns: ["quotation_id"]
+            isOneToOne: false
+            referencedRelation: "quotations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quotations: {
+        Row: {
+          created_at: string
+          customer_id: string
+          gst_amount: number
+          id: string
+          notes: string | null
+          quotation_date: string
+          quotation_id: string
+          status: string | null
+          subtotal: number
+          terms: string | null
+          total_amount: number
+          updated_at: string
+          valid_until: string
+        }
+        Insert: {
+          created_at?: string
+          customer_id: string
+          gst_amount?: number
+          id?: string
+          notes?: string | null
+          quotation_date?: string
+          quotation_id: string
+          status?: string | null
+          subtotal?: number
+          terms?: string | null
+          total_amount?: number
+          updated_at?: string
+          valid_until: string
+        }
+        Update: {
+          created_at?: string
+          customer_id?: string
+          gst_amount?: number
+          id?: string
+          notes?: string | null
+          quotation_date?: string
+          quotation_id?: string
+          status?: string | null
+          subtotal?: number
+          terms?: string | null
+          total_amount?: number
+          updated_at?: string
+          valid_until?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quotations_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_quotation_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
