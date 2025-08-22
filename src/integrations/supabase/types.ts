@@ -65,6 +65,111 @@ export type Database = {
         }
         Relationships: []
       }
+      invoice_items: {
+        Row: {
+          created_at: string
+          description: string | null
+          gst_percentage: number
+          id: string
+          invoice_id: string
+          item_name: string
+          line_total: number
+          product_id: string | null
+          quantity: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          gst_percentage?: number
+          id?: string
+          invoice_id: string
+          item_name: string
+          line_total?: number
+          product_id?: string | null
+          quantity?: number
+          unit_price?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          gst_percentage?: number
+          id?: string
+          invoice_id?: string
+          item_name?: string
+          line_total?: number
+          product_id?: string | null
+          quantity?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoice_items_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invoice_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invoices: {
+        Row: {
+          created_at: string
+          customer_id: string
+          due_date: string
+          frequency: string
+          gst_amount: number
+          id: string
+          invoice_id: string
+          notes: string | null
+          payment_method: string
+          quotation_id: string | null
+          status: string
+          subtotal: number
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          customer_id: string
+          due_date: string
+          frequency?: string
+          gst_amount?: number
+          id?: string
+          invoice_id: string
+          notes?: string | null
+          payment_method?: string
+          quotation_id?: string | null
+          status?: string
+          subtotal?: number
+          total_amount?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          customer_id?: string
+          due_date?: string
+          frequency?: string
+          gst_amount?: number
+          id?: string
+          invoice_id?: string
+          notes?: string | null
+          payment_method?: string
+          quotation_id?: string | null
+          status?: string
+          subtotal?: number
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           category: string | null
@@ -213,6 +318,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_invoice_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       generate_quotation_id: {
         Args: Record<PropertyKey, never>
         Returns: string
