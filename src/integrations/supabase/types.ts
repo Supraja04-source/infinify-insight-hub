@@ -206,6 +206,54 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          department: string | null
+          designation: string | null
+          email: string
+          full_name: string | null
+          id: string
+          invited_at: string | null
+          invited_by: string | null
+          phone: string | null
+          role: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          department?: string | null
+          designation?: string | null
+          email: string
+          full_name?: string | null
+          id: string
+          invited_at?: string | null
+          invited_by?: string | null
+          phone?: string | null
+          role?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          department?: string | null
+          designation?: string | null
+          email?: string
+          full_name?: string | null
+          id?: string
+          invited_at?: string | null
+          invited_by?: string | null
+          phone?: string | null
+          role?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       quotation_items: {
         Row: {
           created_at: string
@@ -312,6 +360,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      team_invitations: {
+        Row: {
+          created_at: string
+          department: string | null
+          designation: string | null
+          email: string
+          expires_at: string
+          id: string
+          invited_by: string
+          role: string
+          status: string
+          token: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          department?: string | null
+          designation?: string | null
+          email: string
+          expires_at: string
+          id?: string
+          invited_by: string
+          role?: string
+          status?: string
+          token: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          department?: string | null
+          designation?: string | null
+          email?: string
+          expires_at?: string
+          id?: string
+          invited_by?: string
+          role?: string
+          status?: string
+          token?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
     }
     Views: {

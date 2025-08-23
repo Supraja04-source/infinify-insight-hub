@@ -9,8 +9,11 @@ import {
   Bot,
   Headphones,
   Settings,
-  Building2
+  Building2,
+  Shield,
+  UserPlus,
 } from "lucide-react";
+import { useAuth } from "@/components/auth/AuthProvider";
 import {
   Sidebar,
   SidebarContent,
@@ -24,23 +27,31 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-const navigation = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard },
-  { title: "Analytics & Reports", url: "/analytics", icon: BarChart3 },
-  { title: "Quotation Management", url: "/quotations", icon: FileText },
-  { title: "Invoice Management", url: "/invoices", icon: Receipt },
-  { title: "Customers", url: "/customers", icon: Users },
-  { title: "Follow-ups", url: "/followups", icon: Calendar },
-  { title: "AI Assistant", url: "/ai-assistant", icon: Bot },
-  { title: "Customer Support", url: "/support", icon: Headphones },
-  { title: "Settings", url: "/settings", icon: Settings },
-];
-
 export function AppSidebar() {
   const { state } = useSidebar();
+  const { isAdmin } = useAuth();
   const location = useLocation();
   const currentPath = location.pathname;
   const collapsed = state === "collapsed";
+
+  const navigation = [
+    { title: "Dashboard", url: "/", icon: LayoutDashboard },
+    { title: "Analytics & Reports", url: "/analytics", icon: BarChart3 },
+    { title: "Quotation Management", url: "/quotations", icon: FileText },
+    { title: "Invoice Management", url: "/invoices", icon: Receipt },
+    { title: "Customers", url: "/customers", icon: Users },
+    { title: "Follow-ups", url: "/followups", icon: Calendar },
+    { title: "AI Assistant", url: "/ai-assistant", icon: Bot },
+    { title: "Customer Support", url: "/support", icon: Headphones },
+    { title: "Settings", url: "/settings", icon: Settings },
+  ];
+
+  const adminNavigation = [
+    { title: "User Management", url: "/user-management", icon: Shield },
+    { title: "Team Management", url: "/team-management", icon: UserPlus },
+  ];
+
+  const allNavigation = isAdmin ? [...navigation, ...adminNavigation] : navigation;
 
   const isActive = (path: string) => currentPath === path;
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
@@ -75,7 +86,7 @@ export function AppSidebar() {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
-              {navigation.map((item) => (
+              {allNavigation.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <NavLink
