@@ -132,11 +132,14 @@ export default function Auth() {
         });
       } else {
         toast({
-          title: 'Account Created!',
-          description: 'Please check your email for verification before signing in.',
+          title: 'Account Created Successfully!',
+          description: 'Please check your email and click the confirmation link to activate your account. Check your spam folder if you don\'t see it.',
         });
         // Reset form after successful signup
         signUpForm.reset();
+        // Switch to sign in tab
+        const signInTab = document.querySelector('[value="signin"]') as HTMLElement;
+        if (signInTab) signInTab.click();
       }
     } catch (err) {
       toast({
